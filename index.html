@@ -98,13 +98,13 @@
     .hero-image.left {
       left: 0;
       background-image: url("gauche.jpg");
-      background-size: auto 80%;
-      background-position: 54% center;
+      background-size: auto 88%;
+      background-position: 40% center;
     }
     .hero-image.right {
       right: 0;
       background-image: url("droite.jpg");
-      background-position: 50% center;
+      background-position: 50% 22%;
     }
     .hero-content { padding-top: 58px; text-align: center; }
     .eyebrow { font-size: 11px; color: #d3d5df; }
@@ -179,31 +179,14 @@
       align-items: stretch;
     }
     .player-panel {
+      display: flex;
+      align-items: center;
       background: rgba(16, 17, 19, 0.04);
       border: 1px solid rgba(16,17,19,.12);
       border-radius: 24px;
       padding: 26px;
     }
-    .player-art {
-      position: relative;
-      aspect-ratio: 1.4;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(66,104,255,.9), rgba(17,19,22,.85));
-      color: white;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
-    }
-    .player-art::before {
-      content: "";
-      position: absolute;
-      inset: 14px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.3);
-    }
-    .player-art svg { width: 68px; height: 68px; opacity: .96; }
-    .player-meta { margin-top: 20px; }
+    .player-meta { width: 100%; }
     .player-meta .mono {
       display: block;
       margin-bottom: 8px;
@@ -376,8 +359,16 @@
       .nav .nav-contact { padding: 9px 10px; }
       .hero { min-height: 690px; min-height: max(640px, 92svh); }
       .hero-image { width: 70%; }
-      .hero-image.left { left: -20%; }
-      .hero-image.right { right: -20%; }
+      .hero-image.left {
+        left: -20%;
+        background-size: auto 80%;
+        background-position: 28% center;
+      }
+      .hero-image.right {
+        right: -20%;
+        background-size: auto 90%;
+        background-position: 50% 80%;
+      }
       .hero::after { background: linear-gradient(90deg, rgba(10,11,13,.24), rgba(10,11,13,.69) 40%, rgba(10,11,13,.71) 60%, rgba(10,11,13,.24)), linear-gradient(0deg, var(--ink), transparent 30%, transparent 80%, rgba(10,11,13,.2)); }
       .hero h1 { font-size: clamp(66px, 14vw, 105px); }
       .hero-meta { bottom: 25px; font-size: 9px; }
@@ -465,14 +456,6 @@
         </div>
         <div class="listen-player">
           <div class="player-panel" aria-live="polite">
-            <div class="player-art" aria-hidden="true">
-              <svg viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="2"/>
-                <circle cx="32" cy="32" r="17" stroke="currentColor" stroke-width="2"/>
-                <circle cx="32" cy="32" r="4" fill="currentColor"/>
-                <path d="M32 3v12M61 32H49M32 61V49M3 32h12" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </div>
             <div class="player-meta">
               <span class="mono" id="current-tag">Bleu câlin · morceau 01</span>
               <h3 id="current-title">Morceau 01</h3>
