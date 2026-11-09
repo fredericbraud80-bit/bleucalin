@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101113">
+  <meta name="description" content="Bleu câlin — un duo roots, du blues sous tension et du rock brut.">
+  <title>Bleu câlin — Rock brut, cœur bleu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #101113;
+      --paper: #eeece6;
+      --blue: #4268ff;
+      --muted: #999a9f;
+      --line: rgba(238, 236, 230, .18);
+      --mono: "DM Mono", monospace;
+      --sans: "Space Grotesk", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    body::after {
+      position: fixed;
+      z-index: 5;
+      pointer-events: none;
+      inset: 0;
+      content: "";
+      opacity: .11;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .wrap { width: min(1320px, calc(100% - 72px)); margin-inline: auto; }
+    .mono { font-family: var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      inset: 0 0 auto;
+      height: 78px;
+      display: flex;
+      align-items: center;
+      background: rgba(16, 17, 19, .58);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.17);
+    }
+    .topbar-inner { display: flex; justify-content: space-between; align-items: center; }
+    .brand-mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; }
+    .brand-mark .dot { width: 10px; height: 10px; background: var(--blue); border-radius: 50%; }
+    .nav { display: flex; align-items: center; gap: 36px; }
+    .nav a { font-size: 13px; text-decoration: none; color: rgba(255,255,255,.77); transition: color .2s; }
+    .nav a:hover { color: white; }
+    .nav .nav-contact {
+      border: 1px solid rgba(255,255,255,.42);
+      padding: 11px 16px;
+      border-radius: 999px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: min(780px, 100svh);
+      min-height: max(660px, min(780px, 100svh));
+      overflow: hidden;
+      display: grid;
+      align-items: center;
+      isolation: isolate;
+      background: #17191d;
+    }
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      content: "";
+      background: linear-gradient(90deg, rgba(10,11,13,.08), rgba(10,11,13,.66) 35%, rgba(10,11,13,.7) 65%, rgba(10,11,13,.12)),
+                  linear-gradient(0deg, var(--ink) 0%, transparent 25%, transparent 78%, rgba(10,11,13,.2));
+    }
+    .hero-image {
+      position: absolute;
+      z-index: -2;
+      inset-block: 0;
+      width: 52%;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(.68) contrast(1.13);
+    }
+    .hero-image.left {
+      left: 0;
+      background-image: url("gauche.jpg");
+      background-size: auto 80%;
+      background-position: 54% center;
+    }
+    .hero-image.right {
+      right: 0;
+      background-image: url("droite.jpg");
+      background-position: 50% center;
+    }
+    .hero-content { padding-top: 58px; text-align: center; }
+    .eyebrow { font-size: 11px; color: #d3d5df; }
+    .hero h1 {
+      margin: 22px 0 14px;
+      font-size: clamp(76px, 13.8vw, 190px);
+      line-height: .78;
+      letter-spacing: -.105em;
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero-subtitle { margin: 30px 0 31px; font-size: clamp(16px, 2vw, 21px); letter-spacing: .02em; }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      padding: 14px 20px;
+      background: var(--blue);
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background .2s, transform .2s;
+    }
+    .hero-cta:hover { background: #3154eb; transform: translateY(-2px); }
+    .arrow { font-size: 19px; line-height: .6; }
+    .hero-meta {
+      position: absolute;
+      right: 0;
+      bottom: 36px;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255,255,255,.72);
+      font-size: 10px;
+    }
+    .scroll-cue { display: flex; align-items: center; gap: 10px; }
+    .scroll-cue::before { content: ""; width: 30px; height: 1px; background: var(--blue); }
+
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+      padding-block: 124px;
+    }
+    .section-label { color: var(--blue); font-size: 11px; }
+    .intro h2, .section-heading h2 {
+      margin: 0;
+      font-size: clamp(46px, 7vw, 88px);
+      letter-spacing: -.075em;
+      line-height: .94;
+      font-weight: 600;
+    }
+    .intro-copy { max-width: 630px; padding-top: 38px; }
+    .intro-copy p { margin: 0; color: #c1c1c3; font-size: clamp(18px, 2.2vw, 24px); line-height: 1.55; }
+    .intro-copy p + p { margin-top: 20px; }
+    .blue { color: var(--blue); }
+
+    .listen { padding: 82px 0 112px; background: var(--paper); color: var(--ink); }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 42px; }
+    .section-heading .section-label { display: block; margin-bottom: 18px; }
+    .section-heading h2 { font-size: clamp(54px, 8vw, 100px); }
+    .listen-note { max-width: 260px; margin: 0 0 7px; color: #626267; font-size: 14px; line-height: 1.55; }
+    .listen-player {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .player-panel {
+      background: rgba(16, 17, 19, 0.04);
+      border: 1px solid rgba(16,17,19,.12);
+      border-radius: 24px;
+      padding: 26px;
+    }
+    .player-art {
+      position: relative;
+      aspect-ratio: 1.4;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(66,104,255,.9), rgba(17,19,22,.85));
+      color: white;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+    }
+    .player-art::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.3);
+    }
+    .player-art svg { width: 68px; height: 68px; opacity: .96; }
+    .player-meta { margin-top: 20px; }
+    .player-meta .mono {
+      display: block;
+      margin-bottom: 8px;
+      color: #77777c;
+      font-size: 10px;
+    }
+    .player-meta h3 {
+      margin: 0;
+      font-size: clamp(29px, 4vw, 44px);
+      letter-spacing: -.06em;
+      line-height: .96;
+    }
+    .player-meta p {
+      margin: 8px 0 0;
+      color: #69696e;
+      font-size: 14px;
+    }
+    .player-meta audio {
+      width: 100%;
+      margin-top: 20px;
+      accent-color: var(--blue);
+    }
+    .playlist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(16,17,19,.03);
+      border: 1px solid rgba(16,17,19,.12);
+      border-radius: 24px;
+      padding: 14px;
+    }
+    .track-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+      box-shadow: none;
+    }
+    .track-item:hover {
+      background: rgba(66,104,255,.06);
+      border-color: rgba(66,104,255,.18);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(16,17,19,.06);
+    }
+    .track-item.is-active {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+      box-shadow: 0 12px 18px rgba(66,104,255,.22);
+    }
+    .track-index {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(16,17,19,.08);
+      font-size: 11px;
+      font-family: var(--mono);
+      font-weight: 500;
+    }
+    .track-item.is-active .track-index {
+      background: rgba(255,255,255,.2);
+    }
+    .track-copy {
+      min-width: 0;
+    }
+    .track-copy strong {
+      display: block;
+      font-size: 20px;
+      letter-spacing: -.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .track-copy span {
+      display: block;
+      margin-top: 2px;
+      color: inherit;
+      opacity: .76;
+      font-size: 12px;
+      font-family: var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .track-time {
+      font-size: 12px;
+      font-family: var(--mono);
+      opacity: .82;
+    }
+    .platform-links { display: flex; gap: 10px; }
+    .platform-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border: 1px solid rgba(16,17,19,.25);
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: color .2s, background .2s, border-color .2s, transform .2s;
+    }
+    .platform-links a:hover { background: var(--ink); color: white; border-color: var(--ink); transform: translateY(-1px); }
+
+    .gallery { padding-block: 118px 130px; }
+    .gallery .section-heading { margin-bottom: 48px; }
+    .gallery-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; }
+    .gallery figure { position: relative; margin: 0; overflow: hidden; background: #24262a; }
+    .gallery figure:first-child { grid-row: span 2; min-height: 540px; }
+    .gallery figure:not(:first-child) { min-height: 260px; }
+    .gallery img { display: block; width: 100%; height: 100%; min-height: inherit; object-fit: cover; filter: saturate(.72); transition: transform .6s, filter .5s; }
+    .gallery figure:hover img { transform: scale(1.035); filter: saturate(1); }
+    .gallery figcaption {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 40px 22px 20px;
+      background: linear-gradient(transparent, rgba(0,0,0,.7));
+      color: white;
+      font-size: 12px;
+    }
+
+    .contact { padding-block: 90px 34px; background: var(--blue); color: white; }
+    .contact-top { display: flex; justify-content: space-between; align-items: end; gap: 30px; padding-bottom: 82px; }
+    .contact .section-label { color: rgba(255,255,255,.74); }
+    .contact h2 { margin: 18px 0 0; font-size: clamp(58px, 10vw, 126px); letter-spacing: -.09em; line-height: .84; }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px 22px;
+      border: 1px solid rgba(255,255,255,.66);
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color .2s, background .2s;
+    }
+    .contact-link:hover { background: white; color: var(--blue); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.36);
+      color: rgba(255,255,255,.78);
+      font-size: 10px;
+    }
+    .footer-links { display: flex; gap: 22px; }
+    .footer-links a { text-decoration: none; }
+    .footer-links a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      .wrap { width: min(100% - 40px, 560px); }
+      .topbar { height: 66px; }
+      .nav { gap: 16px; }
+      .nav a { font-size: 11px; }
+      .nav .nav-contact { padding: 9px 10px; }
+      .hero { min-height: 690px; min-height: max(640px, 92svh); }
+      .hero-image { width: 70%; }
+      .hero-image.left { left: -20%; }
+      .hero-image.right { right: -20%; }
+      .hero::after { background: linear-gradient(90deg, rgba(10,11,13,.24), rgba(10,11,13,.69) 40%, rgba(10,11,13,.71) 60%, rgba(10,11,13,.24)), linear-gradient(0deg, var(--ink), transparent 30%, transparent 80%, rgba(10,11,13,.2)); }
+      .hero h1 { font-size: clamp(66px, 14vw, 105px); }
+      .hero-meta { bottom: 25px; font-size: 9px; }
+      .intro { grid-template-columns: 1fr; gap: 22px; padding-block: 86px; }
+      .intro-copy { padding-top: 0; }
+      .listen { padding-block: 72px 84px; }
+      .section-heading { align-items: start; flex-direction: column; margin-bottom: 32px; }
+      .listen-note { max-width: 400px; }
+      .listen-player { grid-template-columns: 1fr; }
+      .track-item { grid-template-columns: 30px 1fr auto; }
+      .track-copy strong { font-size: 18px; }
+      .platform-links { grid-column: 1 / -1; padding-top: 5px; }
+      .platform-links a { flex: 1; justify-content: center; }
+      .gallery { padding-block: 82px 92px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .gallery figure:first-child { grid-column: 1 / -1; grid-row: auto; min-height: 390px; }
+      .gallery figure:not(:first-child) { min-height: 200px; }
+      .gallery figcaption { padding: 32px 13px 14px; font-size: 10px; }
+      .contact { padding-top: 72px; }
+      .contact-top { align-items: start; flex-direction: column; padding-bottom: 60px; }
+      .contact h2 { font-size: clamp(66px, 14vw, 100px); }
+      .footer-bottom { flex-wrap: wrap; }
+    }
+    @media (max-width: 390px) {
+      .wrap { width: calc(100% - 32px); }
+      .nav { gap: 11px; }
+      .nav a { font-size: 10px; }
+      .nav .nav-contact { padding: 8px; }
+      .brand-mark { font-size: 13px; }
+      .hero h1 { font-size: 17vw; }
+      .footer-links { gap: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner wrap">
+      <a class="brand-mark" href="#accueil" aria-label="Bleu câlin, accueil"><span class="dot"></span> BLEU CÂLIN</a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="#ecoute">Écoute</a>
+        <a href="#photos">Photos</a>
+        <a class="nav-contact" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="accueil" aria-labelledby="hero-title">
+      <div class="hero-image left" role="img" aria-label="Concert, projecteurs bleus et foule"></div>
+      <div class="hero-image right" role="img" aria-label="Guitariste sur scène"></div>
+      <div class="hero-content wrap">
+        <span class="eyebrow mono">Blues sous tension · Rock sans filtre</span>
+        <h1 id="hero-title">Bleu <span>câlin</span></h1>
+        <p class="hero-subtitle">Deux âmes. Un son.</p>
+        <a class="hero-cta" href="#ecoute">Ecoutez !</a>
+      </div>
+      <div class="hero-meta wrap mono">
+        <span>Un duo roots · France - Canada</span>
+        <span class="scroll-cue">Faire défiler</span>
+      </div>
+    </section>
+
+    <section class="intro wrap" aria-labelledby="intro-title">
+      <div>
+        <span class="section-label mono">01 — Le duo</span>
+        <h2 id="intro-title">Petit comité.<br>Gros <span class="blue">volume.</span></h2>
+      </div>
+      <div class="intro-copy">
+        <p>Bleu câlin, c’est un duo branché roots, quelque part entre la poussière du blues et l’électricité du rock brut.</p>
+        <p>Une guitare, une basse, deux voix — et juste ce qu’il faut de bleu.</p>
+      </div>
+    </section>
+
+    <section class="listen" id="ecoute" aria-labelledby="listen-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <span class="section-label mono">02 — Tendre l’oreille</span>
+            <h2 id="listen-title">Écoute.</h2>
+          </div>
+          <p class="listen-note">Lance les morceaux pour un voyage musical sans pareil.</p>
+        </div>
+        <div class="listen-player">
+          <div class="player-panel" aria-live="polite">
+            <div class="player-art" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none">
+                <circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="2"/>
+                <circle cx="32" cy="32" r="17" stroke="currentColor" stroke-width="2"/>
+                <circle cx="32" cy="32" r="4" fill="currentColor"/>
+                <path d="M32 3v12M61 32H49M32 61V49M3 32h12" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="player-meta">
+              <span class="mono" id="current-tag">Bleu câlin · morceau 01</span>
+              <h3 id="current-title">Morceau 01</h3>
+              <p id="current-subtitle">Rock brut · 03:14</p>
+              <audio id="audio-player" controls preload="metadata" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            </div>
+          </div>
+
+          <div class="playlist" aria-label="Liste des morceaux">
+            <button type="button" class="track-item is-active" data-title="Morceau 01" data-subtitle="Rock brut · 03:14" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-tag="Bleu câlin · morceau 01">
+              <span class="track-index">01</span>
+              <span class="track-copy">
+                <strong>Morceau 01</strong>
+                <span>Rock brut</span>
+              </span>
+              <span class="track-time">03:14</span>
+            </button>
+            <button type="button" class="track-item" data-title="Morceau 02" data-subtitle="Blues cru · 02:56" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" data-tag="Bleu câlin · morceau 02">
+              <span class="track-index">02</span>
+              <span class="track-copy">
+                <strong>Morceau 02</strong>
+                <span>Blues cru</span>
+              </span>
+              <span class="track-time">02:56</span>
+            </button>
+            <button type="button" class="track-item" data-title="Morceau 03" data-subtitle="Garage soul · 04:08" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" data-tag="Bleu câlin · morceau 03">
+              <span class="track-index">03</span>
+              <span class="track-copy">
+                <strong>Morceau 03</strong>
+                <span>Garage soul</span>
+              </span>
+              <span class="track-time">04:08</span>
+            </button>
+            <button type="button" class="track-item" data-title="Morceau 04" data-subtitle="Roots blues · 03:42" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" data-tag="Bleu câlin · morceau 04">
+              <span class="track-index">04</span>
+              <span class="track-copy">
+                <strong>Morceau 04</strong>
+                <span>Roots blues</span>
+              </span>
+              <span class="track-time">03:42</span>
+            </button>
+            <button type="button" class="track-item" data-title="Morceau 05" data-subtitle="Slow rock · 04:31" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" data-tag="Bleu câlin · morceau 05">
+              <span class="track-index">05</span>
+              <span class="track-copy">
+                <strong>Morceau 05</strong>
+                <span>Slow rock</span>
+              </span>
+              <span class="track-time">04:31</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery wrap" id="photos" aria-labelledby="gallery-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-label mono">03 — En images</span>
+          <h2 id="gallery-title">Le décort,<br>en bleu.</h2>
+        </div>
+        <p class="listen-note">Home studio, instruments.</p>
+      </div>
+      <div class="gallery-grid">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1400&q=85" alt="Home studio avec console de mixage et guitares" loading="lazy">
+          <figcaption class="mono">01 — Création · home studio</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=85" alt="Microphone prêt pour une prise de voix en studio" loading="lazy">
+          <figcaption class="mono">02 — En action · studio voix</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=900&q=85" alt="Guitare jouée en gros plan" loading="lazy">
+          <figcaption class="mono">03 — Guitares</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-top">
+        <div>
+          <span class="section-label mono">Une date, une idée, un bonjour ?</span>
+          <h2>On se<br>parle<span aria-hidden="true"> ?</span></h2>
+        </div>
+        <a class="contact-link" href="mailto:bonjour@bleucalin.fr">Écrire au duo</a>
+      </div>
+      <div class="footer-bottom mono">
+        <span>© <span id="year">2026</span> Bleu câlin</span>
+        <div class="footer-links">
+          <a href="mailto:bonjour@bleucalin.fr">Email</a>
+          <a href="https://www.facebook.com/jean.parratte" target="_blank" rel="noopener noreferrer">Facebook</a>
+        </div>
+        <a href="#accueil" aria-label="Retour en haut" style="text-decoration:none">Haut ↑</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const audioPlayer = document.getElementById("audio-player");
+    const currentTag = document.getElementById("current-tag");
+    const currentTitle = document.getElementById("current-title");
+    const currentSubtitle = document.getElementById("current-subtitle");
+    const trackButtons = [...document.querySelectorAll(".track-item")];
+
+    trackButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const { title, subtitle, src, tag } = button.dataset;
+
+        audioPlayer.src = src;
+        audioPlayer.load();
+        audioPlayer.play();
+
+        currentTag.textContent = tag;
+        currentTitle.textContent = title;
+        currentSubtitle.textContent = subtitle;
+
+        trackButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
